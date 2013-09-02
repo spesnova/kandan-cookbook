@@ -23,5 +23,16 @@ platforms:
 
 suites:
 - name: default
-  run_list: ["recipe[kandan]"]
-  attributes: {}
+  run_list: 
+    - "recipe[yum::epel]"
+#    - "recipe[kandan::ruby]"
+    - "recipe[kandan]"
+  attributes:
+#    rbenv:
+#      rubies:
+#        - 1.9.3-p392
+#      global: 1.9.3-p392
+#      gems:
+#        1.9.3-p392:
+#          - name: bundler
+#            version: 1.3.5
