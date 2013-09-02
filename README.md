@@ -17,7 +17,7 @@ Todo:
 # Requirements
 ## Platform
 
-* RHEL
+* CentOS 6
 
 ## Cookbook
 
@@ -43,13 +43,21 @@ Include the recipe on your node or role that fits how you wish to install Kandan
 * `node["kandan"]["password"]` - The database password for kandan.
 * `node["kandan"]["database_master_role"]` - The role database master has.
  
-
 # Recipes
 ## kandan::default
 This recipe deploy the kandan app.
 
+* Ensures git is installed and available using the git cookbook.
+* Ensures runit is installed and available using the git cookbook.
+* Ensures mysql client is installed and available using the mysql cookbook.
+* Create a user and group to install and run the Kandan app.
+* Deploy kandan app from source using the application_ruby cookbook.
+* Start thin server.
+
 ## kandan::mysql
 This recipe install and configure mysql server for kandan.
+
+* Create a database, user for kandan using mysql cookbook.
 
 # License and Author
 
