@@ -1,10 +1,18 @@
-# kandan cookbook
-This cookbook is designed to deploy the Kandan application.
+# Description
+This cookbook is designed to deploy the Kandan application. [WIP]
 
 Currently supported:
 
 * Deploy the kandan app from the source
 * Install and Manage MySQL by using the opscode officail recipe
+
+Todo:
+
+* Support Ubuntu
+* Support test-kitchen
+* Write README
+* Add spec
+* Add nginx
 
 # Requirements
 ## Platform
