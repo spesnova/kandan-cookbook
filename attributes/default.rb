@@ -31,34 +31,3 @@ default["kandan"]["database"]["name"]     = "kandan"
 default["kandan"]["database"]["username"] = "kandan"
 default["kandan"]["database"]["password"] = "kandan"
 default["kandan"]["database_master_role"] = "kandan_database_master"
-
-# Unicorn setting
-default["unicorn"]["port"] = "#{node['kandan']['path']}/shared/pids/nginx-rails.sock"
-default["unicorn"]["before_fork"] = <<-BLOCK
-old_pid = "#{node['kandan']['path']}/current" + '/tmp/pids/unicorn.pid.oldbin'
-  if ::File.exists?(old_pid) && server.pid != old_pid
-    begin
-      process.kill("QUIT", ::File.read(old_pid).to_i)
-    rescue Errno::ENOENT, Errno::ESRCH
-      # someone else did our job for us
-    end
-  end
-BLOCK
-default["unicorn"]["after_fork"] = <<-BLOCK
-ActiveRecord::Base.establish_connection
-
-  begin
-    uid, gid = Process.euid, Process.egid
-    user, group = "#{node['kandan']['user']}", "#{node['kandan']['user']}"
-    target_uid = Etc.getpwnam(user).uid
-    target_gid = Etc.getgrnam(group).gid
-    worker.tmp.chown(target_uid, target_gid)
-    if uid != target_uid || gid != target_gid
-      Process.initgroups(user, target_gid)
-      Process::GID.change_privilege(target_gid)
-      Process::UID.change_privilege(target_uid)
-    end
-  rescue => e
-    raise e
-  end
-BLOCK
