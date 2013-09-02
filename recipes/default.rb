@@ -38,6 +38,7 @@ include_recipe "mysql::ruby"
   end
 end
 
+# OS packages required by kandan
 case node["platform_family"]
 when "rhel", "fedora"
   require_packages = %w{ gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel rubygem-nokogiri }
@@ -58,7 +59,7 @@ application "kandan" do
   repository node["kandan"]["repo"]
   revision node["kandan"]["revision"]
 
-  # Symlink
+  ### Symlink ###
 #  purge_before_symlink %w{ log tmp/pids public/system config }
   create_dirs_before_symlink %w{ log tmp public config pids }
   symlinks "pids" => "tmp/pids",
@@ -99,7 +100,7 @@ application "kandan" do
   notifies :run, "execute[restart_thin_for_kandan]", :immediately
 end
 
-# FIXME
+### FIXME ###
 # use runit
 execute "start_thin_for_kandan" do
   action :run
