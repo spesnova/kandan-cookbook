@@ -8,6 +8,8 @@ Currently supported:
 
 Todo:
 
+* Serve static assets (for now rails `config.serve_static_assets` is true...)
+* Add a resource for kandan bootstrap (db migration)
 * Support Ubuntu
 * Support test-kitchen
 * Write README
